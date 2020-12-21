@@ -134,17 +134,53 @@ def download_depends():
 			print('Error in wxWidgets-' + wx_version + ' download.')
 			wx_build = False
 
+	# if not os.path.exists(cspice_path):
+	# 	# Create & change directories
+	# 	os.makedirs(depends_path + '/cspice', exist_ok=True)
+	# 	os.makedirs(cspice_path, exist_ok=True)
+	# 	os.chdir(cspice_path)
+	#
+	# 	if sys.platform == 'darwin':
+	# 		cspice_type = 'MacIntel_OSX_AppleC'
+	# 	else:
+	# 		cspice_type = 'PC_Linux_GCC'
+	#
+	# 	# Determine 32 or 64 bit system
+	# 	if struct.calcsize("P") * 8 == 32:
+	# 		cspice_dir = 'cspice32'
+	# 		cspice_bit = '32bit'
+	# 	else:
+	# 		cspice_dir = 'cspice64'
+	# 		cspice_bit = '64bit'
+	#
+	# 	if sys.platform == 'win32':
+	# 		# Download and extract Spice for Windows (32/64-bit)
+	# 		print('Downloading ' + cspice_bit + ' CSPICE ' + cspice_version + '...')
+	# 		os.system(depends_path+'/bin/curl/curl ftp://naif.jpl.nasa.gov/pub/naif/misc/toolkit_N0065/C/PC_Windows_VisualC_' + cspice_bit + '/packages/cspice.zip > cspice.zip')
+	# 		os.system(depends_path + '/bin/7za/7za.exe x cspice.zip > nul')
+	# 		os.rename('cspice', cspice_dir)
+	# 		os.remove('cspice.zip')
+	# 	else:
+	# 		# Download and extract Spice for Mac/Linux (32/64-bit)
+	# 		print('Downloading ' + cspice_bit + ' CSPICE ' + cspice_version + '...')
+	# 		os.system('curl ftp://naif.jpl.nasa.gov/pub/naif/misc/toolkit_"' + cspice_version + '"/C/"' + cspice_type + '"_' + cspice_bit + '/packages/cspice.tar.Z > cspice.tar.Z')
+	# 		os.system('gzip -d cspice.tar.Z')
+	# 		os.system('tar -xf cspice.tar')
+	# 		os.system('mv cspice ' + cspice_dir)
+	# 		os.remove('cspice.tar')
+
+# 修改
 	if not os.path.exists(cspice_path):
-		# Create & change directories
-		os.makedirs(depends_path + '/cspice', exist_ok=True)
-		os.makedirs(cspice_path, exist_ok=True)
+	# Create & change directories
+		#os.makedirs(depends_path + '/cspice', exist_ok=True)
+		#os.makedirs(cspice_path, exist_ok=True)
 		os.chdir(cspice_path)
 
 		if sys.platform == 'darwin':
 			cspice_type = 'MacIntel_OSX_AppleC'
 		else:
 			cspice_type = 'PC_Linux_GCC'
-			
+
 		# Determine 32 or 64 bit system
 		if struct.calcsize("P") * 8 == 32:
 			cspice_dir = 'cspice32'
@@ -152,12 +188,12 @@ def download_depends():
 		else:
 			cspice_dir = 'cspice64'
 			cspice_bit = '64bit'
-			
+
 		if sys.platform == 'win32':
 			# Download and extract Spice for Windows (32/64-bit)
-			print('Downloading ' + cspice_bit + ' CSPICE ' + cspice_version + '...')
-			os.system(depends_path+'/bin/curl/curl ftp://naif.jpl.nasa.gov/pub/naif/misc/toolkit_N0065/C/PC_Windows_VisualC_' + cspice_bit + '/packages/cspice.zip > cspice.zip')
-			os.system(depends_path + '/bin/7za/7za.exe x cspice.zip > nul') 
+			print('修改 ' + cspice_bit + ' CSPICE ' + cspice_version + '...')
+			#os.system(depends_path+'/bin/curl/curl ftp://naif.jpl.nasa.gov/pub/naif/misc/toolkit_N0065/C/PC_Windows_VisualC_' + cspice_bit + '/packages/cspice.zip > cspice.zip')
+			os.system(depends_path + '/bin/7za/7za.exe x cspice.zip > nul')
 			os.rename('cspice', cspice_dir)
 			os.remove('cspice.zip')
 		else:
@@ -185,8 +221,8 @@ def download_depends():
 			print('Downloading SWIG ' + swig_version + '...')
 			os.system(depends_path+'/bin/curl/curl -L http://download.sourceforge.net/swig/swigwin-' + swig_version + '.zip > swig.zip')
 			os.system(depends_path + '/bin/7za/7za.exe x swig.zip > nul')
-			os.rename('swigwin-' + swig_version, 'swigwin')
-			os.remove('swig.zip')
+			##os.rename('swigwin-' + swig_version, 'swigwin') # 手动修改和和删除
+			##os.remove('swig.zip')
 		else:
 			# Download and extract SWIG for Mac/Linux
 			print('Downloading SWIG ' + swig_version + '...')
@@ -200,7 +236,7 @@ def download_depends():
 			print('Downloading PCRE ' + pcre_version + ' for use with SWIG...')
 			os.chdir(swig_dir)
 			os.system('curl -L https://ftp.pcre.org/pub/pcre/' + pcre_filename + ' > ' + pcre_filename)
-
+	print('line 239')
 	if not os.path.exists(java_path):
 		# Create & change directories
 		os.makedirs(java_path, exist_ok=True)
@@ -218,6 +254,7 @@ def download_depends():
 
 		java_base_url = 'https://github.com/AdoptOpenJDK/openjdk' + java_major_version + '-binaries/releases/download/jdk-' + java_full_version + '/'
 		java_url = java_base_url + 'OpenJDK' + java_major_version + 'U-jdk_x64_' + java_os_name + '_hotspot_' + java_version + '_' + java_update
+
 
 		if sys.platform == 'win32':
 			# Download and extract AdoptOpenJDK for Windows
@@ -341,11 +378,12 @@ def build_wxWidgets():
 			os.chdir('build/msw')
 			
 			print('-- Compiling debug wxWidgets. This could take a while...')
-			os.system('nmake -f makefile.vc OFFICIAL_BUILD=1 COMPILER_VERSION=' + vc_major_version + vc_minor_version + ' ' + tgtcpu + ' SHARED=1 BUILD=debug > ' + logs_path + '\\wxWidgets_build_debug.log 2>&1')
-			
+			num = os.system('nmake -f makefile.vc OFFICIAL_BUILD=1 COMPILER_VERSION=' + vc_major_version + vc_minor_version + ' ' + tgtcpu + ' SHARED=1 BUILD=debug > ' + logs_path + '\\wxWidgets_build_debug.log 2>&1')
+			print("nmake num: ", num)
+
 			print('-- Compiling release wxWidgets. This could take a while...')
-			os.system('nmake -f makefile.vc OFFICIAL_BUILD=1 COMPILER_VERSION=' + vc_major_version + vc_minor_version + ' ' + tgtcpu + ' SHARED=1 BUILD=release > ' + logs_path + '\\wxWidgets_build_release.log 2>&1')
-			
+			num = os.system('nmake -f makefile.vc OFFICIAL_BUILD=1 COMPILER_VERSION=' + vc_major_version + vc_minor_version + ' ' + tgtcpu + ' SHARED=1 BUILD=release > ' + logs_path + '\\wxWidgets_build_release.log 2>&1')
+			print("nmake num: ", num)
 			os.chdir('../..')
 			
 			os.chdir('lib')
